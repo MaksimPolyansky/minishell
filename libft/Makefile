@@ -6,7 +6,7 @@
 #    By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/29 23:04:22 by heusebio          #+#    #+#              #
-#    Updated: 2020/08/21 14:00:51 by heusebio         ###   ########.fr        #
+#    Updated: 2020/12/19 18:17:01 by heusebio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ SRC =	ft_atoi.c \
 		ft_lstnew.c \
 		ft_lstmap.c \
 		ft_strchr_gnl.c \
-		get_next_line.c
+		get_next_line.c \
+		ft_charjoin.c
 
 FLAGS = -Wall -Werror -Wextra
 

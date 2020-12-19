@@ -6,7 +6,7 @@
 /*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:21:10 by heusebio          #+#    #+#             */
-/*   Updated: 2020/10/01 02:26:12 by heusebio         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:16:34 by heusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), \
 											void (*del)(void *));
 ssize_t				ft_strchr_gnl(const char *s, int c);
 int					get_next_line(int fd, char **line);
+char				*ft_charjoin(char const *s1, char const s2);
 
 #endif
