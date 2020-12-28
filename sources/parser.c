@@ -1,6 +1,6 @@
 #include "parser.h"
 
-int				parser_next(t_tokenizer *token, t_parser *tuk)
+int parser_next(t_tokenizer *token, t_parser *tuk)
 {
 	if (token->sort_tokens[tuk->i][0] == 59 && token->sort_tokens[tuk->i][1] == '\0')
 	{
@@ -14,8 +14,7 @@ int				parser_next(t_tokenizer *token, t_parser *tuk)
 		tuk->pipe = parser(token);
 		return (1);
 	}
-	else if ((token->sort_tokens[tuk->i][0] == 60 && token->sort_tokens[tuk->i][1] == '\0') \
-	|| (token->sort_tokens[tuk->i][0] == 62 && token->sort_tokens[tuk->i][1] == '\0'))
+	else if ((token->sort_tokens[tuk->i][0] == 60 && token->sort_tokens[tuk->i][1] == '\0') || (token->sort_tokens[tuk->i][0] == 62 && token->sort_tokens[tuk->i][1] == '\0'))
 	{
 		tuk->i++;
 		tuk->redir = parser(token);
@@ -24,12 +23,11 @@ int				parser_next(t_tokenizer *token, t_parser *tuk)
 	return (0);
 }
 
-t_parser		*parser(t_tokenizer *token)
+t_parser *parser(t_tokenizer *token)
 {
-	t_parser	*tuk;
+	t_parser *tuk;
 
-	if (!(tuk = (t_parser*)ft_calloc(sizeof(t_parser), 1)) \
-	|| !(tuk->arg = (char**)ft_calloc(sizeof(char*), (tuk->malloc_arg = token->i))))
+	if (!(tuk = (t_parser *)ft_calloc(sizeof(t_parser), 1)) || !(tuk->arg = (char **)ft_calloc(sizeof(char *), (tuk->malloc_arg = token->i))))
 		exit(EXIT_FAILURE);
 	while (token->sort_tokens[tuk->i])
 	{

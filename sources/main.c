@@ -1,7 +1,7 @@
 #include "parser.h"
 #include <stdio.h>
 
-int	counter_envp(char **envp)
+int counter_envp(char **envp)
 {
 	int i;
 
@@ -13,16 +13,16 @@ int	counter_envp(char **envp)
 
 int main(int argc, char **argv, char **envp)
 {
-	int			i;
-	t_minishell	*mini;
-	t_parser	*tuk;
-	t_tokenizer	*token;
+	int i;
+	t_minishell *mini;
+	t_parser *tuk;
+	t_tokenizer *token;
 
 	i = -1;
-	if (!(mini = (t_minishell*)ft_calloc(sizeof(t_minishell), 1)))
+	if (!(mini = (t_minishell *)ft_calloc(sizeof(t_minishell), 1)))
 		return (-1);
 	mini->i_env = counter_envp(envp);
-	if (!(mini->env = (char**)malloc(mini->i_env * sizeof(char*) + 1)))
+	if (!(mini->env = (char **)malloc(mini->i_env * sizeof(char *) + 1)))
 		return (-1);
 	while (envp[++i])
 	{
@@ -60,15 +60,15 @@ int main(int argc, char **argv, char **envp)
 		i = 0;
 		while (token->len > i)
 			printf("token: %s|\n", token->tokens[i++]);
-		i=0;
+		i = 0;
 		while (i < token->malloc_tok)
 			free(token->tokens[i++]);
 		free(token->tokens);
 		printf("sort len: %d\n", token->i);
-		i=0;
-		while(token->sort_tokens[i])
+		i = 0;
+		while (token->sort_tokens[i])
 			printf("sort_token: %s|\n", token->sort_tokens[i++]);
-		i=0;
+		i = 0;
 		while (i < token->malloc_sort)
 			free(token->sort_tokens[i++]);
 		free(token->sort_tokens);
@@ -79,7 +79,7 @@ int main(int argc, char **argv, char **envp)
 		i = 0;
 		while (i < tuk->i_arg)
 			printf("arg: %s|\n", tuk->arg[i++]);
-		i=0;
+		i = 0;
 		while (i < tuk->malloc_arg)
 			free(tuk->arg[i++]);
 		free(tuk->arg);
