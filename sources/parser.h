@@ -62,5 +62,7 @@ t_parser *parser(t_tokenizer *token);
 */
 
 t_tokenizer *tokenizer(t_minishell *mini);
+void token_dquote(t_minishell *mini, t_tokenizer *token);
+void token_dquote_quote(t_minishell *mini, t_tokenizer *token);
 
 #endif

@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **envp)
 	if (!(mini = (t_minishell *)ft_calloc(sizeof(t_minishell), 1)))
 		return (-1);
 	mini->i_env = counter_envp(envp);
-	if (!(mini->env = (char **)malloc(mini->i_env * sizeof(char *) + 1)))
+	if (!(mini->env = (char **)malloc(mini->i_env * sizeof(char *))))
 		return (-1);
 	while (envp[++i])
 	{

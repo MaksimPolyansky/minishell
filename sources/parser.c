@@ -29,14 +29,21 @@ t_parser *parser(t_tokenizer *token)
 
 	if (!(tuk = (t_parser *)ft_calloc(sizeof(t_parser), 1)) || !(tuk->arg = (char **)ft_calloc(sizeof(char *), (tuk->malloc_arg = token->i))))
 		exit(EXIT_FAILURE);
+	tuk->i_arg = 1;
 	while (token->sort_tokens[tuk->i])
 	{
 		if (parser_next(token, tuk))
 			;
 		else if (!tuk->cmd)
-			tuk->cmd = ft_strdup(token->sort_tokens[tuk->i++]);
+		{
+			if (!(tuk->cmd = ft_strdup(token->sort_tokens[tuk->i++])))
+				exit(EXIT_FAILURE);
+		}
 		else if (tuk->cmd)
-			tuk->arg[tuk->i_arg++] = ft_strdup(token->sort_tokens[tuk->i++]);
+		{
+			if (!(tuk->arg[tuk->i_arg++] = ft_strdup(token->sort_tokens[tuk->i++])))
+				exit(EXIT_FAILURE);
+		}
 	}
 	return (tuk);
 }
