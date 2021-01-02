@@ -13,6 +13,7 @@ typedef struct s_tokenizer
 	int len;
 	int len_i;
 	char *cash;
+	int next;
 } t_tokenizer;
 
 /*
@@ -50,6 +51,7 @@ typedef struct s_minishell
 */
 
 t_parser *parser(t_tokenizer *token);
+void free_parser(t_parser *tuk);
 
 /*
 ** lexer
@@ -62,6 +64,7 @@ t_parser *parser(t_tokenizer *token);
 */
 
 t_tokenizer *tokenizer(t_minishell *mini);
+void free_token(t_tokenizer *token);
 void token_dquote(t_minishell *mini, t_tokenizer *token);
 void token_dquote_quote(t_minishell *mini, t_tokenizer *token);
 

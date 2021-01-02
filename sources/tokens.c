@@ -1,5 +1,29 @@
 #include "parser.h"
 
+void free_token(t_tokenizer *token)
+{
+	int i;
+
+	if (token->cash)
+		free(token->cash);
+	if (token->sort_tokens)
+	{
+		i = 0;
+		while (i < token->malloc_sort)
+			free(token->sort_tokens[i++]);
+		free(token->sort_tokens);
+	}
+	if (token->tokens)
+	{
+		i = 0;
+		while (i < token->malloc_tok)
+			free(token->tokens[i++]);
+		free(token->tokens);
+	}
+	if (token)
+		free(token);
+}
+
 void add_malloc_char(char **string, char c)
 {
 	char *str;
