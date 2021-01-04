@@ -52,7 +52,7 @@ t_parser *parser(t_tokenizer *token)
 
 	if (!(tuk = (t_parser *)ft_calloc(sizeof(t_parser), 1)) || !(tuk->arg = (char **)ft_calloc(sizeof(char *), (tuk->malloc_arg = token->i))))
 		exit(EXIT_FAILURE);
-	//tuk->i_arg = 1;
+	tuk->i_arg = 1;
 	while (token->sort_tokens[token->next])
 	{
 		if (parser_next(token, tuk))
