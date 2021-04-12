@@ -1,52 +1,69 @@
-#include "parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wphylici <wphylici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/10 15:44:51 by wphylici          #+#    #+#             */
+/*   Updated: 2021/01/31 20:19:26 by wphylici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int counter_envp(char **envp)
+#include "../includes/minishell.h"
+
+t_minishell		*g_in;
+
+void	alloc_struct(t_parser *data, char **envp)
 {
-	int i;
+	int			i;
 
-	i = 0;
-	while (envp[i])
-		i++;
-	return (i);
-}
-
-void	clear_mini(t_minishell *mini)
-{
-	mini->env = NULL;
-	mini->exec_stat = 0;
-	mini->flag = 0;
-	mini->home_path = NULL;
-	mini->i_env = 0;
-	mini->input = NULL;
-	mini->line_i = 0;
-}
-
-int main(int argc, char **argv, char **envp)
-{
-	int i;
-	t_minishell mini;
-
-	clear_mini(&mini);
 	i = -1;
-	mini.i_env = counter_envp(envp);
-	if (!(mini.env = (char**)malloc(mini.i_env * sizeof(char*))))
-		return (-1);
+	if (!(g_in = (t_minishell*)ft_calloc(sizeof(t_minishell), 1)))
+		my_exit(data, EXIT_FAILURE);
+	g_in->i_env = counter_dbl_arr(envp);
+	if (!(g_in->env = (char**)ft_calloc((g_in->i_env), sizeof(char*))))
+		my_exit(data, EXIT_FAILURE);
 	while (envp[++i])
+		if (!(g_in->env[i] = ft_strdup(envp[i])))
+			my_exit(data, EXIT_FAILURE);
+}
+
+void	check_ctrl_d(void)
+{
+	if (g_in->flag_input == 21)
 	{
-		if (!(mini.env[i] = ft_strdup(envp[i])))
-			return (-1);
+		if (g_in->input)
+			free(g_in->input);
+		g_in->input = NULL;
+		g_in->flag_input = 0;
 	}
+}
+
+int		main(int argc, char **argv, char **envp)
+{
+	t_parser	*data;
+
+	data = NULL;
+	if (**argv && argc)
+		;
+	alloc_struct(data, envp);
 	while (1)
 	{
-		mini.line_i = 0;
-		ft_putstr_fd("minishell--> ", 1);
-		get_next_line(0, &mini.input);
-		check_input(&mini);
-		free(mini.input);
+		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, sig_handler);
+		ft_putstr_fd(ANSI_COLOR_CYAN"\e[1mminishell ➜  \e[1m"
+		ANSI_COLOR_MAGENTA, 1);
+		g_in->stdin = dup(0);
+		g_in->stdout = dup(1);
+		ft_putstr_fd(g_in->input, 1);
+		get_next_line(0, &g_in->input);
+		check_ctrl_d();
+		if (!g_in->input)
+			continue;
+		ft_putstr_fd(ANSI_COLOR_RESET, 1);
+		check_input(g_in);
+		free_struct();
 	}
-	i = -1;
-	while (++i < mini.i_env)
-		free(mini.env[i]);
-	free(mini.env);
 	return (0);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+         #
+#    By: wphylici <wphylici@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/29 23:04:22 by heusebio          #+#    #+#              #
-#    Updated: 2020/12/19 18:17:01 by heusebio         ###   ########.fr        #
+#    Updated: 2021/01/27 02:42:16 by wphylici         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,8 @@ SRC =	ft_atoi.c \
 		ft_lstmap.c \
 		ft_strchr_gnl.c \
 		get_next_line.c \
-		ft_charjoin.c
+		ft_charjoin.c \
+		get_next_line_utils.c \
 
 FLAGS = -Wall -Werror -Wextra
 

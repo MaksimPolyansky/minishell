@@ -3,72 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wphylici <wphylici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/03 13:20:18 by heusebio          #+#    #+#             */
-/*   Updated: 2020/10/20 09:43:26 by heusebio         ###   ########.fr       */
+/*   Created: 2020/06/05 16:21:56 by wphylici          #+#    #+#             */
+/*   Updated: 2021/01/27 03:57:32 by wphylici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		my_free(char **s)
+int		writing_in_line(char **line, char *buf)
 {
-	if (*s)
-		free(*s);
-	*s = NULL;
-	return (-1);
+	char *tmp;
+
+	tmp = *line;
+	if (!(*line = ft_strjoin(tmp, buf)))
+		exit(EXIT_FAILURE);
+	my_free_gnl(&tmp, 0);
+	return (0);
 }
 
-int		next_line(char **buf, char **line, int len)
+void	check_error(char *buf, int fd)
 {
-	char	*bufic;
+	if (read(fd, buf, 0) < 0)
+		exit(EXIT_FAILURE);
+}
 
-	bufic = NULL;
-	if (len < 0)
+int		get_line(int fd, char **line)
+{
+	char		buf[B_S + 1];
+	char		*pointer_to_n;
+	int			how_many_was_read;
+
+	!(*line = ft_strdup("")) ? exit(EXIT_FAILURE) : 0;
+	pointer_to_n = NULL;
+	how_many_was_read = 0;
+	check_error(buf, fd);
+	while (!pointer_to_n && (how_many_was_read = read(fd, buf, B_S)) >= 0)
 	{
-		if (!(*line = ft_substr(*buf, 0, ft_strlen(*buf))))
-			return (my_free(buf));
+		if (how_many_was_read == 0 && buf[0] != '\0')
+		{
+			ft_putstr_fd("  \b\b", 1);
+			buf[1] = '\0';
+			g_in->flag_input = 42;
+			continue ;
+		}
+		else if (how_many_was_read == 0)
+			exit_cntrl_d();
+		buf[how_many_was_read] = '\0';
+		if ((pointer_to_n = ft_strchr(buf, '\n')))
+			*pointer_to_n = '\0';
+		writing_in_line(line, buf);
 	}
-	else
-	{
-		if (!(*line = ft_substr(*buf, 0, len)))
-			return (my_free(buf));
-		if (!(bufic = ft_substr(*buf, len + 1, \
-						ft_strchr_gnl(*buf, '\0') - len - 1)))
-			return (my_free(buf));
-	}
-	free(*buf);
-	*buf = NULL;
-	*buf = bufic;
-	if (!*buf)
-		return (0);
-	return (1);
+	return (how_many_was_read ? READ : 0);
 }
 
 int		get_next_line(int fd, char **line)
 {
-	char		buffer[BUFFER_SIZE + 1];
-	size_t		byte;
-	static char	*buf = NULL;
-	char		*bufic;
+	int			res;
 
-	if (!buf)
-		buf = ft_strdup("");
-	if (!line || !buf || fd < 0 || read(fd, buffer, 0) < 0)
-		return (my_free(&buf));
-	if (ft_strchr_gnl(buf, '\n') != -1)
-		return (next_line(&buf, line, ft_strchr_gnl(buf, '\n')));
-	while ((byte = read(fd, buffer, BUFFER_SIZE)))
-	{
-		buffer[byte] = '\0';
-		if (!(bufic = ft_strjoin(buf, buffer)))
-			return (my_free(&buf));
-		free(buf);
-		buf = NULL;
-		buf = bufic;
-		if (ft_strchr_gnl(buf, '\n') != -1)
-			break ;
-	}
-	return (next_line(&buf, line, ft_strchr_gnl(buf, '\n')));
+	res = 0;
+	if (!line || fd < 0 || B_S < 1 || B_S > 2147483647)
+		return (ERROR);
+	if ((res = get_line(fd, line)) == -1)
+		return (-1);
+	return (res);
 }

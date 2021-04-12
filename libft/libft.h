@@ -3,21 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heusebio <heusebio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wphylici <wphylici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:21:10 by heusebio          #+#    #+#             */
-/*   Updated: 2021/01/10 18:48:14 by heusebio         ###   ########.fr       */
+/*   Updated: 2021/01/27 02:44:15 by wphylici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFFER_SIZE 100
+# include "../includes/minishell.h"
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+
+# define READ 1
+# define ERROR -1
+# define B_S 1
 
 typedef struct		s_list
 {
@@ -73,5 +77,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), \
 ssize_t				ft_strchr_gnl(const char *s, int c);
 int					get_next_line(int fd, char **line);
 char				*ft_charjoin(char **s1, char const s2);
+void				exit_cntrl_d(void);
+int					my_free_gnl(char **s, int ret_value);
 
 #endif
